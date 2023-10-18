@@ -1,0 +1,34 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  name: http-8081
+spec:
+  path: /
+  port:
+    targetPort: "8081"
+  to:
+    kind: Service
+    name: devfile-sample-go-basic
+    weight: null
+status: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: http-8081
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: devfile-sample-go-basic
+            port:
+              number: 8081
+        path: /
+        pathType: ImplementationSpecific
+status:
+  loadBalancer: {}
+---
